@@ -1,13 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { Styles, Config } from '../shared/types.js'
-import { getHandleValue } from '../utils/utils.js'
-import { usePicker } from '../context.js'
-import {
-  usePaintSat,
-  usePaintLight,
-  usePaintBright,
-} from '../hooks/usePaintHue.js'
-import tinycolor from 'tinycolor2'
+import React, { useEffect, useRef, useState } from 'react';
+import tinycolor from 'tinycolor2';
+import { usePicker } from '../context.js';
+import { usePaintBright, usePaintLight, usePaintSat } from '../hooks/usePaintHue.js';
+import type { Config, Styles } from '../shared/types.js';
+import { getHandleValue } from '../utils/utils.js';
 
 const AdvBar = ({
   value,
@@ -20,56 +16,56 @@ const AdvBar = ({
   defaultStyles,
   pickerIdSuffix,
 }: {
-  reffy: any
-  value: number
-  label: string
-  config: Config
-  squareWidth: number
-  openAdvanced: boolean
-  defaultStyles: Styles
-  pickerIdSuffix: string
-  callback: (arg0: number) => void
+  reffy: any;
+  value: number;
+  label: string;
+  config: Config;
+  squareWidth: number;
+  openAdvanced: boolean;
+  defaultStyles: Styles;
+  pickerIdSuffix: string;
+  callback: (arg0: number) => void;
 }) => {
-  const { barSize } = config
-  const [dragging, setDragging] = useState<boolean>(false)
-  const [handleTop, setHandleTop] = useState<number>(2)
-  const left = value * (squareWidth - 18)
+  const { barSize } = config;
+  const [dragging, setDragging] = useState<boolean>(false);
+  const [handleTop, setHandleTop] = useState<number>(2);
+  const left = value * (squareWidth - 18);
 
   useEffect(() => {
-    setHandleTop(reffy?.current?.offsetTop - 2)
-  }, [openAdvanced, reffy])
+    setHandleTop(reffy?.current?.offsetTop - 2);
+  }, [openAdvanced, reffy]);
 
   const stopDragging = () => {
-    setDragging(false)
-  }
+    setDragging(false);
+  };
 
   const handleMove = (e: any) => {
     if (dragging) {
-      callback(getHandleValue(e, barSize))
+      callback(getHandleValue(e, barSize));
     }
-  }
+  };
 
   const handleClick = (e: any) => {
     if (!dragging) {
-      callback(getHandleValue(e, barSize))
+      callback(getHandleValue(e, barSize));
     }
-  }
+  };
 
   const handleDown = () => {
-    setDragging(true)
-  }
+    setDragging(true);
+  };
 
   useEffect(() => {
     const handleUp = () => {
-      stopDragging()
-    }
+      stopDragging();
+    };
 
-    window.addEventListener('mouseup', handleUp)
+    window.addEventListener('mouseup', handleUp);
 
     return () => {
-      window.removeEventListener('mouseup', handleUp)
-    }
-  }, [])
+      window.removeEventListener('mouseup', handleUp);
+    };
+  }, []);
 
   return (
     <div style={{ width: '100%', padding: '3px 0px 3px 0px' }}>
@@ -108,7 +104,7 @@ const AdvBar = ({
           tabIndex={0}
           role="button"
           onKeyDown={() => {
-            return
+            return;
           }}
         >
           {label}
@@ -124,38 +120,39 @@ const AdvBar = ({
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
 const AdvancedControls = ({ openAdvanced }: { openAdvanced: boolean }) => {
-  const { config, tinyColor, handleChange, squareWidth, hc, defaultStyles, pickerIdSuffix } = usePicker()
-  const { s, l } = tinyColor.toHsl()
+  const { config, tinyColor, handleChange, squareWidth, hc, defaultStyles, pickerIdSuffix } =
+    usePicker();
+  const { s, l } = tinyColor.toHsl();
 
-  const satRef = useRef(null)
-  const lightRef = useRef(null)
-  const brightRef = useRef(null)
-  usePaintSat(satRef, hc?.h, l * 100, squareWidth)
-  usePaintLight(lightRef, hc?.h, s * 100, squareWidth)
-  usePaintBright(brightRef, hc?.h, s * 100, squareWidth)
+  const satRef = useRef(null);
+  const lightRef = useRef(null);
+  const brightRef = useRef(null);
+  usePaintSat(satRef, hc?.h, l * 100, squareWidth);
+  usePaintLight(lightRef, hc?.h, s * 100, squareWidth);
+  usePaintBright(brightRef, hc?.h, s * 100, squareWidth);
 
   const satDesat = (value: number) => {
-    const { r, g, b } = tinycolor({ h: hc?.h, s: value / 100, l }).toRgb()
-    handleChange(`rgba(${r},${g},${b},${hc?.a})`)
-  }
+    const { r, g, b } = tinycolor({ h: hc?.h, s: value / 100, l }).toRgb();
+    handleChange(`rgba(${r},${g},${b},${hc?.a})`);
+  };
 
   const setLight = (value: number) => {
-    const { r, g, b } = tinycolor({ h: hc?.h, s, l: value / 100 }).toRgb()
-    handleChange(`rgba(${r},${g},${b},${hc?.a})`)
-  }
+    const { r, g, b } = tinycolor({ h: hc?.h, s, l: value / 100 }).toRgb();
+    handleChange(`rgba(${r},${g},${b},${hc?.a})`);
+  };
 
   const setBright = (value: number) => {
     const { r, g, b } = tinycolor({
       h: hc?.h,
       s: hc?.s * 100,
       v: value,
-    }).toRgb()
-    handleChange(`rgba(${r},${g},${b},${hc?.a})`)
-  }
+    }).toRgb();
+    handleChange(`rgba(${r},${g},${b},${hc?.a})`);
+  };
 
   return (
     <div
@@ -215,7 +212,7 @@ const AdvancedControls = ({ openAdvanced }: { openAdvanced: boolean }) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdvancedControls
+export default AdvancedControls;

@@ -1,13 +1,14 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.5/schema.json",
   "files": {
-    "ignore": [
-      ".tsimp",
-      ".yarn",
-      "coverage",
-      "dist",
-      ".pnp.cjs",
-      ".pnp.loader.mjs"
+    "includes": [
+      "**",
+      "!**/.tsimp",
+      "!**/.yarn",
+      "!**/coverage",
+      "!**/dist",
+      "!**/.pnp.cjs",
+      "!**/.pnp.loader.mjs"
     ]
   },
   "formatter": {
@@ -16,11 +17,9 @@
   },
   "linter": {
     "rules": {
+      "recommended": false,
       "complexity": {
         "noUselessSwitchCase": "off"
-      },
-      "suspicious": {
-        "noConsoleLog": "warn"
       }
     }
   },
@@ -40,17 +39,17 @@
   },
   "overrides": [
     {
-      "include": ["**/package.json"],
+      "includes": ["**/package.json"],
       "formatter": {
         "lineWidth": 1
       }
     },
     {
-      "include": ["**/vite.config.ts"],
+      "includes": ["**/vite.config.ts"],
       "linter": {
         "rules": {
           "suspicious": {
-            "noConsoleLog": "off"
+            "noConsole": { "level": "off", "options": { "allow": ["log"] } }
           }
         }
       }

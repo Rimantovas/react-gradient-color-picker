@@ -1,22 +1,18 @@
-import React from 'react'
-import { usePicker } from '../context.js'
+import React from 'react';
+import { usePicker } from '../context.js';
 
-const ComparibleColors = ({
-  openComparibles,
-}: {
-  openComparibles: boolean
-}) => {
-  const { tinyColor, handleChange, defaultStyles, pickerIdSuffix } = usePicker()
+const ComparibleColors = ({ openComparibles }: { openComparibles: boolean }) => {
+  const { tinyColor, handleChange, defaultStyles, pickerIdSuffix } = usePicker();
 
-  const analogous = tinyColor.analogous()
-  const monochromatic = tinyColor.monochromatic()
-  const triad = tinyColor.triad()
-  const tetrad = tinyColor.tetrad()
+  const analogous = tinyColor.analogous();
+  const monochromatic = tinyColor.monochromatic();
+  const triad = tinyColor.triad();
+  const tetrad = tinyColor.tetrad();
 
   const handleClick = (tiny: any) => {
-    const { r, g, b, a } = tiny.toRgb()
-    handleChange(`rgba(${r},${g},${b},${a})`)
-  }
+    const { r, g, b, a } = tiny.toRgb();
+    handleChange(`rgba(${r},${g},${b},${a})`);
+  };
 
   return (
     <div
@@ -181,7 +177,7 @@ const ComparibleColors = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ComparibleColors
+export default ComparibleColors;

@@ -1,43 +1,36 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React from 'react'
-import { usePicker } from '../context.js'
-import { fakePresets } from '../constants.js'
+import React from 'react';
+import { fakePresets } from '../constants.js';
+import { usePicker } from '../context.js';
 
 const Presets = ({ presets = [] }: { presets?: string[] }) => {
-  const {
-    value,
-    onChange,
-    isDarkMode,
-    squareWidth,
-    handleChange,
-    pickerIdSuffix,
-  } = usePicker()
+  const { value, onChange, isDarkMode, squareWidth, handleChange, pickerIdSuffix } = usePicker();
 
   const getPresets = () => {
     if (presets?.length > 0) {
-      return presets?.slice(0, 18)
+      return presets?.slice(0, 18);
     } else {
-      return fakePresets
+      return fakePresets;
     }
-  }
+  };
 
   const handlePresetClick = (preset: string) => {
     if (preset?.includes('gradient')) {
-      onChange(preset)
+      onChange(preset);
     } else {
-      handleChange(preset)
+      handleChange(preset);
     }
-  }
+  };
 
   const getBorder = (p: string) => {
-    if (!p || isDarkMode) return ''
+    if (!p || isDarkMode) return '';
     const c = p?.replace(' ', '');
     if (c === 'rgba(255,255,255,1)') {
-      return '1px solid #96959c'
+      return '1px solid #96959c';
     }
-    return ''
-  }
+    return '';
+  };
 
   return (
     <div
@@ -94,7 +87,7 @@ const Presets = ({ presets = [] }: { presets?: string[] }) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Presets
+export default Presets;

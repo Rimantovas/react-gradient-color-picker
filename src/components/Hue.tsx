@@ -1,55 +1,55 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { usePicker } from '../context.js'
-import usePaintHue from '../hooks/usePaintHue.js'
-import { getHandleValue } from '../utils/utils.js'
-import tinycolor from 'tinycolor2'
+import React, { useEffect, useRef, useState } from 'react';
+import tinycolor from 'tinycolor2';
+import { usePicker } from '../context.js';
+import usePaintHue from '../hooks/usePaintHue.js';
+import { getHandleValue } from '../utils/utils.js';
 
 const Hue = () => {
-  const barRef = useRef<HTMLCanvasElement>(null)
-  const { config, handleChange, squareWidth, hc, setHc, pickerIdSuffix } = usePicker()
-  const [dragging, setDragging] = useState(false)
-  const { barSize } = config
-  usePaintHue(barRef, squareWidth)
+  const barRef = useRef<HTMLCanvasElement>(null);
+  const { config, handleChange, squareWidth, hc, setHc, pickerIdSuffix } = usePicker();
+  const [dragging, setDragging] = useState(false);
+  const { barSize } = config;
+  usePaintHue(barRef, squareWidth);
 
   const stopDragging = () => {
-    setDragging(false)
-  }
+    setDragging(false);
+  };
 
   const handleDown = () => {
-    setDragging(true)
-  }
+    setDragging(true);
+  };
 
   const handleHue = (e: any) => {
-    const newHue = getHandleValue(e, barSize) * 3.6
-    const tinyHsv = tinycolor({ h: newHue, s: hc?.s, v: hc?.v })
-    const { r, g, b } = tinyHsv.toRgb()
-    handleChange(`rgba(${r}, ${g}, ${b}, ${hc.a})`)
-    setHc({ ...hc, h: newHue })
-  }
+    const newHue = getHandleValue(e, barSize) * 3.6;
+    const tinyHsv = tinycolor({ h: newHue, s: hc?.s, v: hc?.v });
+    const { r, g, b } = tinyHsv.toRgb();
+    handleChange(`rgba(${r}, ${g}, ${b}, ${hc.a})`);
+    setHc({ ...hc, h: newHue });
+  };
 
   const handleMove = (e: any) => {
     if (dragging) {
-      handleHue(e)
+      handleHue(e);
     }
-  }
+  };
 
   const handleClick = (e: any) => {
     if (!dragging) {
-      handleHue(e)
+      handleHue(e);
     }
-  }
+  };
 
   useEffect(() => {
     const handleUp = () => {
-      stopDragging()
-    }
+      stopDragging();
+    };
 
-    window.addEventListener('mouseup', handleUp)
+    window.addEventListener('mouseup', handleUp);
 
     return () => {
-      window.removeEventListener('mouseup', handleUp)
-    }
-  }, [])
+      window.removeEventListener('mouseup', handleUp);
+    };
+  }, []);
 
   return (
     <div
@@ -99,7 +99,7 @@ const Hue = () => {
         }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default Hue
+export default Hue;

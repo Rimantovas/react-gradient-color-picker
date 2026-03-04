@@ -1,29 +1,23 @@
-import React from 'react'
-import { usePicker } from '../context.js'
-import { formatInputValues, low, high } from '../utils/formatters.js'
-import { controlBtnStyles } from '../styles/styles.js'
-import TrashIcon, {
-  LinearIcon,
-  RadialIcon,
-  DegreesIcon,
-  StopIcon,
-} from './icon.js'
+import React from 'react';
+import { usePicker } from '../context.js';
+import { controlBtnStyles } from '../styles/styles.js';
+import { formatInputValues, high, low } from '../utils/formatters.js';
+import TrashIcon, { DegreesIcon, LinearIcon, RadialIcon, StopIcon } from './icon.js';
 
 const GradientType = () => {
-  const { gradientType, onChange, value, defaultStyles, pickerIdSuffix } =
-    usePicker()
-  const isLinear = gradientType === 'linear-gradient'
-  const isRadial = gradientType === 'radial-gradient'
+  const { gradientType, onChange, value, defaultStyles, pickerIdSuffix } = usePicker();
+  const isLinear = gradientType === 'linear-gradient';
+  const isRadial = gradientType === 'radial-gradient';
 
   const handleLinear = () => {
-    const remaining = value.split(/,(.+)/)[1]
-    onChange(`linear-gradient(90deg, ${remaining}`)
-  }
+    const remaining = value.split(/,(.+)/)[1];
+    onChange(`linear-gradient(90deg, ${remaining}`);
+  };
 
   const handleRadial = () => {
-    const remaining = value.split(/,(.+)/)[1]
-    onChange(`radial-gradient(circle, ${remaining}`)
-  }
+    const remaining = value.split(/,(.+)/)[1];
+    onChange(`radial-gradient(circle, ${remaining}`);
+  };
 
   return (
     <div style={defaultStyles.rbgcpControlBtnWrapper}>
@@ -38,7 +32,7 @@ const GradientType = () => {
         tabIndex={0}
         role="button"
         onKeyDown={() => {
-          return
+          return;
         }}
       >
         <LinearIcon color={isLinear ? '#568CF5' : ''} />
@@ -54,27 +48,21 @@ const GradientType = () => {
         tabIndex={0}
         role="button"
         onKeyDown={() => {
-          return
+          return;
         }}
       >
         <RadialIcon color={isRadial ? '#568CF5' : ''} />
       </div>
     </div>
-  )
-}
+  );
+};
 
 const StopPicker = () => {
-  const {
-    currentLeft,
-    currentColor,
-    defaultStyles,
-    handleGradient,
-    pickerIdSuffix,
-  } = usePicker()
+  const { currentLeft, currentColor, defaultStyles, handleGradient, pickerIdSuffix } = usePicker();
 
   const handleMove = (newVal: string) => {
-    handleGradient(currentColor, formatInputValues(parseInt(newVal), 0, 100))
-  }
+    handleGradient(currentColor, formatInputValues(parseInt(newVal), 0, 100));
+  };
 
   return (
     <div
@@ -99,18 +87,17 @@ const StopPicker = () => {
         // className="rbgcp-control-input rbgcp-stop-input"
       />
     </div>
-  )
-}
+  );
+};
 
 const DegreePicker = () => {
-  const { degrees, onChange, value, defaultStyles, pickerIdSuffix } =
-    usePicker()
+  const { degrees, onChange, value, defaultStyles, pickerIdSuffix } = usePicker();
 
   const handleDegrees = (e: any) => {
-    const newValue = formatInputValues(e.target.value, 0, 360)
-    const remaining = value.split(/,(.+)/)[1]
-    onChange(`linear-gradient(${newValue ?? 0}deg, ${remaining}`)
-  }
+    const newValue = formatInputValues(e.target.value, 0, 360);
+    const remaining = value.split(/,(.+)/)[1];
+    onChange(`linear-gradient(${newValue ?? 0}deg, ${remaining}`);
+  };
 
   return (
     <div
@@ -147,25 +134,22 @@ const DegreePicker = () => {
         °
       </div>
     </div>
-  )
-}
+  );
+};
 
 const DeleteBtn = () => {
-  const { colors, selectedColor, createGradientStr, defaultStyles, pickerIdSuffix } =
-    usePicker()
+  const { colors, selectedColor, createGradientStr, defaultStyles, pickerIdSuffix } = usePicker();
 
   const deletePoint = () => {
     if (colors?.length > 2) {
       const formatted = colors?.map((fc: any, i: number) => ({
         ...fc,
         value: i === selectedColor - 1 ? high(fc) : low(fc),
-      }))
-      const remaining = formatted?.filter(
-        (_: any, i: number) => i !== selectedColor
-      )
-      createGradientStr(remaining)
+      }));
+      const remaining = formatted?.filter((_: any, i: number) => i !== selectedColor);
+      createGradientStr(remaining);
     }
-  }
+  };
 
   return (
     <div
@@ -176,24 +160,24 @@ const DeleteBtn = () => {
       tabIndex={0}
       role="button"
       onKeyDown={() => {
-        return
+        return;
       }}
     >
       <TrashIcon />
     </div>
-  )
-}
+  );
+};
 
 const GradientControls = ({
   hideGradientType,
   hideGradientAngle,
   hideGradientStop,
 }: {
-  hideGradientType?: boolean
-  hideGradientAngle?: boolean
-  hideGradientStop?: boolean
+  hideGradientType?: boolean;
+  hideGradientAngle?: boolean;
+  hideGradientStop?: boolean;
 }) => {
-  const { gradientType, defaultStyles, pickerIdSuffix } = usePicker()
+  const { gradientType, defaultStyles, pickerIdSuffix } = usePicker();
   return (
     <div
       style={{
@@ -208,14 +192,12 @@ const GradientControls = ({
     >
       {!hideGradientType && <GradientType />}
       <div style={{ width: 53 }}>
-        {!hideGradientAngle && gradientType === 'linear-gradient' && (
-          <DegreePicker />
-        )}
+        {!hideGradientAngle && gradientType === 'linear-gradient' && <DegreePicker />}
       </div>
       {!hideGradientStop && <StopPicker />}
       <DeleteBtn />
     </div>
-  )
-}
+  );
+};
 
-export default GradientControls
+export default GradientControls;

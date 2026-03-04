@@ -1,11 +1,11 @@
-'use client'
-import React from 'react'
-import PickerContextWrapper from '../context.js'
-import Picker from './Picker.js'
-import { ColorPickerProps } from '../shared/types.js'
-import { defaultLocales } from '../constants.js'
-import { objectToString } from '../utils/utils.js'
-import { getStyles } from '../styles/styles.js'
+'use client';
+import React from 'react';
+import { defaultLocales } from '../constants.js';
+import PickerContextWrapper from '../context.js';
+import type { ColorPickerProps } from '../shared/types.js';
+import { getStyles } from '../styles/styles.js';
+import { objectToString } from '../utils/utils.js';
+import Picker from './Picker.js';
 
 export function ColorPicker({
   idSuffix,
@@ -37,21 +37,20 @@ export function ColorPicker({
   showHexAlpha = false,
   config = {},
 }: ColorPickerProps) {
-  const safeValue = objectToString(value)
+  const safeValue = objectToString(value);
   const isDarkMode =
     typeof window === 'undefined' || disableDarkMode
       ? false
-      : window.matchMedia('(prefers-color-scheme: dark)').matches ||
-          disableLightMode
+      : window.matchMedia('(prefers-color-scheme: dark)').matches || disableLightMode
         ? true
-        : false
+        : false;
   // const contRef = useRef<HTMLDivElement>(null)
-  const defaultStyles = getStyles(isDarkMode, style)
+  const defaultStyles = getStyles(isDarkMode, style);
   const pickerIdSuffix = isDarkMode
     ? `-dark${idSuffix ? `-${idSuffix}` : ''}`
     : idSuffix
       ? `-${idSuffix}`
-      : ''
+      : '';
 
   return (
     <div
@@ -92,5 +91,5 @@ export function ColorPicker({
         />
       </PickerContextWrapper>
     </div>
-  )
+  );
 }

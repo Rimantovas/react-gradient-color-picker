@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { Styles } from '../shared/types.js'
-import { formatInputValues, round } from '../utils/formatters.js'
-import { rgb2cmyk, cmykToRgb, getHexAlpha } from '../utils/converters.js'
-import { usePicker } from '../context.js'
-import tc from 'tinycolor2'
+import React, { useEffect, useState } from 'react';
+import tc from 'tinycolor2';
+import { usePicker } from '../context.js';
+import type { Styles } from '../shared/types.js';
+import { cmykToRgb, getHexAlpha, rgb2cmyk } from '../utils/converters.js';
+import { formatInputValues, round } from '../utils/formatters.js';
 
 const Input = ({
   label,
@@ -14,26 +14,26 @@ const Input = ({
   defaultStyles,
   pickerIdSuffix,
 }: {
-  max?: number
-  label: string
-  value: number
-  hideOpacity: boolean
-  defaultStyles: Styles
-  pickerIdSuffix: string
-  callback: (arg0: number) => void
+  max?: number;
+  label: string;
+  value: number;
+  hideOpacity: boolean;
+  defaultStyles: Styles;
+  pickerIdSuffix: string;
+  callback: (arg0: number) => void;
 }) => {
-  const [temp, setTemp] = useState(value)
-  const width = hideOpacity ? '25%' : '20%'
+  const [temp, setTemp] = useState(value);
+  const width = hideOpacity ? '25%' : '20%';
 
   useEffect(() => {
-    setTemp(value)
-  }, [value])
+    setTemp(value);
+  }, [value]);
 
   const onChange = (e: any) => {
-    const newVal = formatInputValues(parseFloat(e.target.value), 0, max)
-    setTemp(newVal)
-    callback(newVal)
-  }
+    const newVal = formatInputValues(parseFloat(e.target.value), 0, max);
+    setTemp(newVal);
+    callback(newVal);
+  };
 
   return (
     <div
@@ -49,8 +49,8 @@ const Input = ({
       />
       <div style={{ ...defaultStyles.rbgcpInputLabel }}>{label}</div>
     </div>
-  )
-}
+  );
+};
 
 const HexInput = ({
   opacity,
@@ -60,50 +60,47 @@ const HexInput = ({
   defaultStyles,
   pickerIdSuffix,
 }: {
-  tinyColor: any
-  opacity: number
-  showHexAlpha: boolean
-  defaultStyles: Styles
-  pickerIdSuffix: string
-  handleChange: (arg0: string) => void
+  tinyColor: any;
+  opacity: number;
+  showHexAlpha: boolean;
+  defaultStyles: Styles;
+  pickerIdSuffix: string;
+  handleChange: (arg0: string) => void;
 }) => {
-  const [disable, setDisable] = useState('')
-  const hex = tinyColor.toHex()
-  const [newHex, setNewHex] = useState(hex)
+  const [disable, setDisable] = useState('');
+  const hex = tinyColor.toHex();
+  const [newHex, setNewHex] = useState(hex);
 
   useEffect(() => {
     if (disable !== 'hex') {
-      setNewHex(hex)
+      setNewHex(hex);
     }
-  }, [tinyColor, disable, hex])
+  }, [tinyColor, disable, hex]);
 
   const hexFocus = () => {
-    setDisable('hex')
-  }
+    setDisable('hex');
+  };
 
   const hexBlur = () => {
-    setDisable('')
-  }
+    setDisable('');
+  };
 
   const handleHex = (e: any) => {
-    const tinyHex = tc(e.target.value)
-    setNewHex(e.target.value)
+    const tinyHex = tc(e.target.value);
+    setNewHex(e.target.value);
     if (tinyHex.isValid()) {
-      const { r, g, b } = tinyHex.toRgb()
-      const newColor = `rgba(${r}, ${g}, ${b}, ${opacity})`
-      handleChange(newColor)
+      const { r, g, b } = tinyHex.toRgb();
+      const newColor = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+      handleChange(newColor);
     }
-  }
+  };
 
-  const displayValue = showHexAlpha ? `${newHex}${getHexAlpha(opacity)}` : newHex
-  const label = showHexAlpha ? 'HEXA' : 'HEX'
-  const width = showHexAlpha ? 88 : 76
+  const displayValue = showHexAlpha ? `${newHex}${getHexAlpha(opacity)}` : newHex;
+  const label = showHexAlpha ? 'HEXA' : 'HEX';
+  const width = showHexAlpha ? 88 : 76;
 
   return (
-    <div
-      style={{ width, flexShrink: 0 }}
-      id={`rbgcp-hex-input-wrapper${pickerIdSuffix}`}
-    >
+    <div style={{ width, flexShrink: 0 }} id={`rbgcp-hex-input-wrapper${pickerIdSuffix}`}>
       <input
         onBlur={hexBlur}
         onFocus={hexFocus}
@@ -114,8 +111,8 @@ const HexInput = ({
       />
       <div style={{ ...defaultStyles.rbgcpInputLabel }}>{label}</div>
     </div>
-  )
-}
+  );
+};
 
 const RGBInputs = ({
   hc,
@@ -124,15 +121,15 @@ const RGBInputs = ({
   defaultStyles,
   pickerIdSuffix,
 }: {
-  hc: any
-  hideOpacity: boolean
-  defaultStyles: Styles
-  pickerIdSuffix: string
-  handleChange: (arg0: string) => void
+  hc: any;
+  hideOpacity: boolean;
+  defaultStyles: Styles;
+  pickerIdSuffix: string;
+  handleChange: (arg0: string) => void;
 }) => {
   const handleRgb = ({ r, g, b }: { r: number; g: number; b: number }) => {
-    handleChange(`rgba(${r}, ${g}, ${b}, ${hc?.a})`)
-  }
+    handleChange(`rgba(${r}, ${g}, ${b}, ${hc?.a})`);
+  };
 
   return (
     <>
@@ -164,8 +161,8 @@ const RGBInputs = ({
         callback={(newVal) => handleRgb({ r: hc?.r, g: hc?.g, b: newVal })}
       />
     </>
-  )
-}
+  );
+};
 
 const HSLInputs = ({
   hc,
@@ -176,26 +173,26 @@ const HSLInputs = ({
   defaultStyles,
   pickerIdSuffix,
 }: {
-  hc: any
-  tinyColor: any
-  hideOpacity: boolean
-  defaultStyles: Styles
-  pickerIdSuffix: string
-  setHc: (arg0: any) => void
-  handleChange: (arg0: string) => void
+  hc: any;
+  tinyColor: any;
+  hideOpacity: boolean;
+  defaultStyles: Styles;
+  pickerIdSuffix: string;
+  setHc: (arg0: any) => void;
+  handleChange: (arg0: string) => void;
 }) => {
-  const { s, l } = tinyColor.toHsl()
+  const { s, l } = tinyColor.toHsl();
 
   const handleH = (h: number, s: number, l: number) => {
-    const { r, g, b } = tc({ h: h, s: s, l: l }).toRgb()
-    handleChange(`rgba(${r}, ${g}, ${b}, ${hc?.a})`)
-    setHc({ ...hc, h })
-  }
+    const { r, g, b } = tc({ h: h, s: s, l: l }).toRgb();
+    handleChange(`rgba(${r}, ${g}, ${b}, ${hc?.a})`);
+    setHc({ ...hc, h });
+  };
 
   const handleSl = (value: any) => {
-    const { r, g, b } = tc(value).toRgb()
-    handleChange(`rgba(${r}, ${g}, ${b}, ${hc?.a})`)
-  }
+    const { r, g, b } = tc(value).toRgb();
+    handleChange(`rgba(${r}, ${g}, ${b}, ${hc?.a})`);
+  };
 
   return (
     <>
@@ -225,8 +222,8 @@ const HSLInputs = ({
         callback={(newVal) => handleSl({ h: hc?.h, s: s, l: newVal })}
       />
     </>
-  )
-}
+  );
+};
 
 const HSVInputs = ({
   hc,
@@ -236,23 +233,23 @@ const HSVInputs = ({
   defaultStyles,
   pickerIdSuffix,
 }: {
-  hc: any
-  hideOpacity: boolean
-  defaultStyles: Styles
-  pickerIdSuffix: string
-  setHc: (arg0: any) => void
-  handleChange: (arg0: string) => void
+  hc: any;
+  hideOpacity: boolean;
+  defaultStyles: Styles;
+  pickerIdSuffix: string;
+  setHc: (arg0: any) => void;
+  handleChange: (arg0: string) => void;
 }) => {
   const handleH = (h: number, s: number, v: number) => {
-    const { r, g, b } = tc({ h: h, s: s, v: v }).toRgb()
-    handleChange(`rgba(${r}, ${g}, ${b}, ${hc?.a})`)
-    setHc({ ...hc, h })
-  }
+    const { r, g, b } = tc({ h: h, s: s, v: v }).toRgb();
+    handleChange(`rgba(${r}, ${g}, ${b}, ${hc?.a})`);
+    setHc({ ...hc, h });
+  };
 
   const handleSV = (value: any) => {
-    const { r, g, b } = tc(value).toRgb()
-    handleChange(`rgba(${r}, ${g}, ${b}, ${hc?.a})`)
-  }
+    const { r, g, b } = tc(value).toRgb();
+    handleChange(`rgba(${r}, ${g}, ${b}, ${hc?.a})`);
+  };
 
   return (
     <>
@@ -282,8 +279,8 @@ const HSVInputs = ({
         callback={(newVal) => handleSV({ h: hc?.h, s: hc?.s, v: newVal })}
       />
     </>
-  )
-}
+  );
+};
 
 const CMKYInputs = ({
   hc,
@@ -293,18 +290,18 @@ const CMKYInputs = ({
 
   pickerIdSuffix,
 }: {
-  hc: any
-  hideOpacity: boolean
-  defaultStyles: Styles
-  pickerIdSuffix: string
-  handleChange: (arg0: string) => void
+  hc: any;
+  hideOpacity: boolean;
+  defaultStyles: Styles;
+  pickerIdSuffix: string;
+  handleChange: (arg0: string) => void;
 }) => {
-  const { c, m, y, k } = rgb2cmyk(hc?.r, hc?.g, hc?.b)
+  const { c, m, y, k } = rgb2cmyk(hc?.r, hc?.g, hc?.b);
 
   const handleCmyk = (value: any) => {
-    const { r, g, b } = cmykToRgb(value)
-    handleChange(`rgba(${r}, ${g}, ${b}, ${hc?.a})`)
-  }
+    const { r, g, b } = cmykToRgb(value);
+    handleChange(`rgba(${r}, ${g}, ${b}, ${hc?.a})`);
+  };
 
   return (
     <>
@@ -341,8 +338,8 @@ const CMKYInputs = ({
         callback={(newVal) => handleCmyk({ c: c, m: m, y: y, k: newVal / 100 })}
       />
     </>
-  )
-}
+  );
+};
 
 const Inputs = () => {
   const {
@@ -355,7 +352,7 @@ const Inputs = () => {
     handleChange,
     defaultStyles,
     pickerIdSuffix,
-  } = usePicker()
+  } = usePicker();
 
   return (
     <div
@@ -431,7 +428,7 @@ const Inputs = () => {
         />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Inputs
+export default Inputs;

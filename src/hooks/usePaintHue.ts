@@ -1,8 +1,8 @@
-import { useEffect, RefObject } from 'react'
+import { type RefObject, useEffect } from 'react'
 import tinycolor from 'tinycolor2'
 
 const usePaintHue = (
-  canvas: RefObject<HTMLCanvasElement>,
+  canvas: RefObject<HTMLCanvasElement | null>,
   squareWidth: number
 ) => {
   useEffect(() => {
@@ -23,7 +23,7 @@ const usePaintHue = (
 export default usePaintHue
 
 export const usePaintSat = (
-  canvas: RefObject<HTMLCanvasElement>,
+  canvas: RefObject<HTMLCanvasElement | null>,
   h: number,
   l: number,
   squareWidth: number
@@ -44,7 +44,7 @@ export const usePaintSat = (
 }
 
 export const usePaintLight = (
-  canvas: RefObject<HTMLCanvasElement>,
+  canvas: RefObject<HTMLCanvasElement | null>,
   h: number,
   s: number,
   squareWidth: number
@@ -65,7 +65,7 @@ export const usePaintLight = (
 }
 
 export const usePaintBright = (
-  canvas: RefObject<HTMLCanvasElement>,
+  canvas: RefObject<HTMLCanvasElement | null>,
   h: number,
   s: number,
   squareWidth: number

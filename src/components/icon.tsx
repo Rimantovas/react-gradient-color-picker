@@ -1,17 +1,12 @@
 import React from 'react'
 import { usePicker } from '../context.js'
 
-type ColorProps = {
-  color: string
-}
+type ColorProps = { color: string }
 
 const TrashIcon = () => {
   const { defaultStyles } = usePicker()
 
-  const styles = {
-    fill: 'none',
-    strokeWidth: '1.8px',
-  }
+  const styles = { fill: 'none', strokeWidth: '1.8px' }
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -34,10 +29,7 @@ export const LinearIcon = ({ color }: ColorProps) => {
   const { defaultStyles } = usePicker()
 
   const col = color ?? ''
-  const styles = {
-    fill: 'none',
-    strokeWidth: '1.8px',
-  }
+  const styles = { fill: 'none', strokeWidth: '1.8px' }
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -62,11 +54,7 @@ export const RadialIcon = ({ color }: ColorProps) => {
   const { defaultStyles } = usePicker()
 
   const col = color ?? ''
-  const styles = {
-    fill: 'none',
-    strokeMiterlimit: 10,
-    strokeWidth: '1.8px',
-  }
+  const styles = { fill: 'none', strokeMiterlimit: 10, strokeWidth: '1.8px' }
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -101,13 +89,8 @@ export const SlidersIcon = ({ color }: ColorProps) => {
   const { defaultStyles } = usePicker()
 
   const col = color ?? ''
-  const style1 = {
-    fill: 'none',
-    strokeWidth: '1.8px',
-  }
-  const style2 = {
-    strokeWidth: '1.8px',
-  }
+  const style1 = { fill: 'none', strokeWidth: '1.8px' }
+  const style2 = { strokeWidth: '1.8px' }
 
   return (
     <svg
@@ -195,10 +178,7 @@ export const InputsIcon = ({ color }: ColorProps) => {
   const { defaultStyles } = usePicker()
 
   const col = color ?? ''
-  const style1 = {
-    fill: 'none',
-    strokeWidth: '1.8px',
-  }
+  const style1 = { fill: 'none', strokeWidth: '1.8px' }
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -243,10 +223,7 @@ export const PaletteIcon = ({ color }: ColorProps) => {
   const { defaultStyles } = usePicker()
 
   const col = color ?? ''
-  const style2 = {
-    strokeMiterlimit: 10,
-    strokeWidth: '0.5px',
-  }
+  const style2 = { strokeMiterlimit: 10, strokeWidth: '0.5px' }
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -306,11 +283,7 @@ export const DegreesIcon = ({ color }: { color?: string }) => {
   const { defaultStyles } = usePicker()
 
   const col = color ?? ''
-  const style2 = {
-    fill: 'none',
-    strokeMiterlimit: 10,
-    strokeWidth: '1.8px',
-  }
+  const style2 = { fill: 'none', strokeMiterlimit: 10, strokeWidth: '1.8px' }
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

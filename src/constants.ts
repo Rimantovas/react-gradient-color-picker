@@ -3,7 +3,7 @@ export const defaultLocales = {
     SOLID: 'Solid',
     GRADIENT: 'Gradient',
   },
-}
+};
 
 export const fakePresets = [
   'rgba(0,0,0,1)',
@@ -24,4 +24,4 @@ export const fakePresets = [
   'rgba(255,0,0, 1)',
   'rgba(240, 103, 46, 1)',
   'rgba(255,255,0, 1)',
-]
+];

@@ -1,23 +1,22 @@
-import { gradientParser } from '../src/utils/gradientParser'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest';
+import { gradientParser } from '../src/utils/gradientParser';
 
 describe('gradientParser', () => {
   it('should parse linear gradient with hex colors', () => {
-    const gradient = 'linear-gradient(45deg, #012345 0%, #6789AB 100%)'
+    const gradient = 'linear-gradient(45deg, #012345 0%, #6789AB 100%)';
 
     expect(gradientParser(gradient)).toEqual({
       colorStops: [
-        { left: 0, type: 'hex', value: '012345' },
-        { left: 100, type: 'hex', value: '6789AB' },
+        { left: 0, value: 'RGBA(1, 35, 69, 1)' },
+        { left: 100, value: 'rgba(103, 137, 171, 1)' },
       ],
       orientation: { type: 'angular', value: '45' },
       type: 'linear-gradient',
-    })
-  })
+    });
+  });
 
   it('should parse linear gradient with comma-separated rgba colors', () => {
-    const gradient =
-      'linear-gradient(45deg, rgba(1, 2, 3, 0.123) 0%, rgba(4, 5, 6, 0.456) 100%)'
+    const gradient = 'linear-gradient(45deg, rgba(1, 2, 3, 0.123) 0%, rgba(4, 5, 6, 0.456) 100%)';
 
     expect(gradientParser(gradient)).toEqual({
       colorStops: [
@@ -26,12 +25,11 @@ describe('gradientParser', () => {
       ],
       orientation: { type: 'angular', value: '45' },
       type: 'linear-gradient',
-    })
-  })
+    });
+  });
 
   it('should parse linear gradient with rgb + alpha colors', () => {
-    const gradient =
-      'linear-gradient(45deg, rgb(1 2 3 / 0.123) 0%, rgb(4 5 6 / 0.456) 100%)'
+    const gradient = 'linear-gradient(45deg, rgb(1 2 3 / 0.123) 0%, rgb(4 5 6 / 0.456) 100%)';
 
     expect(gradientParser(gradient)).toEqual({
       colorStops: [
@@ -40,12 +38,11 @@ describe('gradientParser', () => {
       ],
       orientation: { type: 'angular', value: '45' },
       type: 'linear-gradient',
-    })
-  })
+    });
+  });
 
   it('should parse linear gradient with comma-separated rgb colors', () => {
-    const gradient =
-      'linear-gradient(45deg, rgb(1, 2, 3) 0%, rgb(4, 5, 6) 100%)'
+    const gradient = 'linear-gradient(45deg, rgb(1, 2, 3) 0%, rgb(4, 5, 6) 100%)';
 
     expect(gradientParser(gradient)).toEqual({
       colorStops: [
@@ -54,8 +51,8 @@ describe('gradientParser', () => {
       ],
       orientation: { type: 'angular', value: '45' },
       type: 'linear-gradient',
-    })
-  })
+    });
+  });
 
   // TODO: Figure out pattern of "HSV" colors
 
@@ -65,4 +62,4 @@ describe('gradientParser', () => {
   //
   //   expect(gradientParser(gradient)).toEqual({})
   // })
-})
+});

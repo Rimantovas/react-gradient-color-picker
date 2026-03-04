@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-no-leaked-render */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useState } from 'react'
-import { SlidersIcon, InputsIcon, PaletteIcon } from './icon.js'
-import { usePicker } from '../context.js'
-import EyeDropper from './EyeDropper.js'
-import AdvancedControls from './AdvancedControls.js'
-import ComparibleColors from './ComparibleColors.js'
-import GradientControls from './GradientControls.js'
-import { LocalesProps } from '../shared/types.js'
-import { colorTypeBtnStyles, controlBtnStyles, modalBtnStyles } from '../styles/styles.js'
+import React, { useState } from 'react';
+import { usePicker } from '../context.js';
+import type { LocalesProps } from '../shared/types.js';
+import { colorTypeBtnStyles, controlBtnStyles, modalBtnStyles } from '../styles/styles.js';
+import AdvancedControls from './AdvancedControls.js';
+import ComparibleColors from './ComparibleColors.js';
+import EyeDropper from './EyeDropper.js';
+import GradientControls from './GradientControls.js';
+import { InputsIcon, PaletteIcon, SlidersIcon } from './icon.js';
 
 const ColorTypeBtns = ({
   hideColorTypeBtns,
@@ -17,16 +17,16 @@ const ColorTypeBtns = ({
   setSolid,
   locales,
 }: {
-  hideColorTypeBtns?: boolean
-  isGradient?: boolean
-  setSolid: () => void
-  setGradient: () => void
-  locales?: LocalesProps
+  hideColorTypeBtns?: boolean;
+  isGradient?: boolean;
+  setSolid: () => void;
+  setGradient: () => void;
+  locales?: LocalesProps;
 }) => {
-  const { defaultStyles, pickerIdSuffix } = usePicker()
+  const { defaultStyles, pickerIdSuffix } = usePicker();
 
   if (hideColorTypeBtns) {
-    return <div style={{ width: 1 }} />
+    return <div style={{ width: 1 }} />;
   } else {
     return (
       <div
@@ -54,35 +54,29 @@ const ColorTypeBtns = ({
           {locales?.CONTROLS?.GRADIENT}
         </div>
       </div>
-    )
+    );
   }
-}
+};
 
 const InputTypeDropdown = ({
   openInputType,
   setOpenInputType,
 }: {
-  openInputType?: boolean
-  setOpenInputType: (arg0: boolean) => void
+  openInputType?: boolean;
+  setOpenInputType: (arg0: boolean) => void;
 }) => {
-  const { inputType, setInputType, defaultStyles, pickerIdSuffix } = usePicker()
-  const vTrans = openInputType
-    ? 'visibility 0ms linear'
-    : 'visibility 100ms linear 150ms'
-  const zTrans = openInputType
-    ? 'z-index 0ms linear'
-    : 'z-index 100ms linear 150ms'
-  const oTrans = openInputType
-    ? 'opacity 120ms linear'
-    : 'opacity 150ms linear 50ms'
+  const { inputType, setInputType, defaultStyles, pickerIdSuffix } = usePicker();
+  const vTrans = openInputType ? 'visibility 0ms linear' : 'visibility 100ms linear 150ms';
+  const zTrans = openInputType ? 'z-index 0ms linear' : 'z-index 100ms linear 150ms';
+  const oTrans = openInputType ? 'opacity 120ms linear' : 'opacity 150ms linear 50ms';
 
   const handleInputType = (e: any, val: string) => {
     if (openInputType) {
-      e.stopPropagation()
-      setInputType(val)
-      setOpenInputType(false)
+      e.stopPropagation();
+      setInputType(val);
+      setOpenInputType(false);
     }
-  }
+  };
 
   return (
     <div
@@ -125,8 +119,8 @@ const InputTypeDropdown = ({
         CMYK
       </div>
     </div>
-  )
-}
+  );
+};
 
 const Controls = ({
   locales,
@@ -140,41 +134,40 @@ const Controls = ({
   hideGradientAngle = false,
   hideGradientStop = false,
 }: {
-  locales?: LocalesProps
-  hideEyeDrop?: boolean
-  hideAdvancedSliders?: boolean
-  hideColorGuide?: boolean
-  hideInputType?: boolean
-  hideColorTypeBtns?: boolean
-  hideGradientControls?: boolean
-  hideGradientType?: boolean
-  hideGradientAngle?: boolean
-  hideGradientStop?: boolean
+  locales?: LocalesProps;
+  hideEyeDrop?: boolean;
+  hideAdvancedSliders?: boolean;
+  hideColorGuide?: boolean;
+  hideInputType?: boolean;
+  hideColorTypeBtns?: boolean;
+  hideGradientControls?: boolean;
+  hideGradientType?: boolean;
+  hideGradientAngle?: boolean;
+  hideGradientStop?: boolean;
 }) => {
   const { config, onChange, isGradient, handleChange, previous, defaultStyles, pickerIdSuffix } =
-    usePicker()
-  const { defaultColor, defaultGradient } = config
-  const [openComparibles, setOpenComparibles] = useState(false)
-  const [openInputType, setOpenInputType] = useState(false)
-  const [openAdvanced, setOpenAdvanced] = useState(false)
+    usePicker();
+  const { defaultColor, defaultGradient } = config;
+  const [openComparibles, setOpenComparibles] = useState(false);
+  const [openInputType, setOpenInputType] = useState(false);
+  const [openAdvanced, setOpenAdvanced] = useState(false);
 
-  const noTools =
-    hideEyeDrop && hideAdvancedSliders && hideColorGuide && hideInputType
+  const noTools = hideEyeDrop && hideAdvancedSliders && hideColorGuide && hideInputType;
 
-  const solidColor = previous?.color ?? defaultColor
-  const gradientColor = previous?.gradient ?? defaultGradient
+  const solidColor = previous?.color ?? defaultColor;
+  const gradientColor = previous?.gradient ?? defaultGradient;
 
   const setSolid = () => {
-    onChange(solidColor)
-  }
+    onChange(solidColor);
+  };
 
   const setGradient = () => {
-    onChange(gradientColor)
-  }
+    onChange(gradientColor);
+  };
 
   const allRightControlsHidden =
-    hideEyeDrop && hideAdvancedSliders && hideColorGuide && hideInputType
-  const allControlsHidden = allRightControlsHidden && hideColorTypeBtns
+    hideEyeDrop && hideAdvancedSliders && hideColorGuide && hideInputType;
+  const allControlsHidden = allRightControlsHidden && hideColorTypeBtns;
 
   if (allControlsHidden) {
     if (isGradient && !hideGradientControls) {
@@ -184,9 +177,9 @@ const Controls = ({
           hideGradientAngle={hideGradientAngle}
           hideGradientStop={hideGradientStop}
         />
-      )
+      );
     } else {
-      return null
+      return null;
     }
   } else {
     return (
@@ -256,12 +249,8 @@ const Controls = ({
             </div>
           )}
         </div>
-        {!hideAdvancedSliders && (
-          <AdvancedControls openAdvanced={openAdvanced} />
-        )}
-        {!hideColorGuide && (
-          <ComparibleColors openComparibles={openComparibles} />
-        )}
+        {!hideAdvancedSliders && <AdvancedControls openAdvanced={openAdvanced} />}
+        {!hideColorGuide && <ComparibleColors openComparibles={openComparibles} />}
         {isGradient && !hideGradientControls && (
           <GradientControls
             hideGradientType={hideGradientType}
@@ -270,8 +259,8 @@ const Controls = ({
           />
         )}
       </div>
-    )
+    );
   }
-}
+};
 
 export default Controls;

@@ -1,13 +1,13 @@
-import React from 'react'
-import Hue from './Hue.js'
-import Inputs from './Inputs.js'
-import Square from './Square.js'
-import Opacity from './Opacity.js'
-import Presets from './Presets.js'
-import Controls from './Controls.js'
-import { usePicker } from '../context.js'
-import GradientBar from './GradientBar.js'
-import { LocalesProps } from '../shared/types.js'
+import React from 'react';
+import { usePicker } from '../context.js';
+import type { LocalesProps } from '../shared/types.js';
+import Controls from './Controls.js';
+import GradientBar from './GradientBar.js';
+import Hue from './Hue.js';
+import Inputs from './Inputs.js';
+import Opacity from './Opacity.js';
+import Presets from './Presets.js';
+import Square from './Square.js';
 
 const Picker = ({
   locales,
@@ -28,7 +28,7 @@ const Picker = ({
   hideAdvancedSliders,
   hideGradientControls,
 }: PickerProps) => {
-  const { isGradient, pickerIdSuffix } = usePicker()
+  const { isGradient, pickerIdSuffix } = usePicker();
 
   return (
     <div style={{ userSelect: 'none' }} id={`rbgcp-color-picker${pickerIdSuffix}`}>
@@ -53,27 +53,27 @@ const Picker = ({
       {!hideInputs && <Inputs />}
       {!hidePresets && <Presets presets={presets} />}
     </div>
-  )
-}
+  );
+};
 
-export default Picker
+export default Picker;
 
 type PickerProps = {
-  hideControls?: boolean
-  hideInputs?: boolean
-  hidePresets?: boolean
-  hideOpacity?: boolean
-  hideHue?: boolean
-  presets?: string[]
-  hideEyeDrop?: boolean
-  hideAdvancedSliders?: boolean
-  hideColorGuide?: boolean
-  hideInputType?: boolean
-  hideColorTypeBtns?: boolean
-  hideGradientType?: boolean
-  hideGradientAngle?: boolean
-  hideGradientStop?: boolean
-  hideGradientControls?: boolean
-  locales?: LocalesProps
-  hidePickerSquare?: boolean
-}
+  hideControls?: boolean;
+  hideInputs?: boolean;
+  hidePresets?: boolean;
+  hideOpacity?: boolean;
+  hideHue?: boolean;
+  presets?: string[];
+  hideEyeDrop?: boolean;
+  hideAdvancedSliders?: boolean;
+  hideColorGuide?: boolean;
+  hideInputType?: boolean;
+  hideColorTypeBtns?: boolean;
+  hideGradientType?: boolean;
+  hideGradientAngle?: boolean;
+  hideGradientStop?: boolean;
+  hideGradientControls?: boolean;
+  locales?: LocalesProps;
+  hidePickerSquare?: boolean;
+};

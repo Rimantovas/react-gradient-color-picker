@@ -1,45 +1,39 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-no-leaked-render */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useState, useEffect } from 'react'
-import { getHandleValue } from '../utils/utils.js'
-import { usePicker } from '../context.js'
-import { low, high } from '../utils/formatters.js'
-import { GradientProps } from '../shared/types.js'
+import React, { useEffect, useState } from 'react';
+import { usePicker } from '../context.js';
+import type { GradientProps } from '../shared/types.js';
+import { high, low } from '../utils/formatters.js';
+import { getHandleValue } from '../utils/utils.js';
 
 export const Handle = ({
   left,
   i,
   setDragging,
 }: {
-  left?: number
-  i: number
-  setDragging: (arg0: boolean) => void
+  left?: number;
+  i: number;
+  setDragging: (arg0: boolean) => void;
 }) => {
-  const {
-    colors,
-    squareWidth,
-    selectedColor,
-    defaultStyles,
-    pickerIdSuffix,
-    createGradientStr,
-  } = usePicker()
-  const isSelected = selectedColor === i
-  const leftMultiplyer = (squareWidth - 18) / 100
+  const { colors, squareWidth, selectedColor, defaultStyles, pickerIdSuffix, createGradientStr } =
+    usePicker();
+  const isSelected = selectedColor === i;
+  const leftMultiplyer = (squareWidth - 18) / 100;
 
   const setSelectedColor = (index: number) => {
     const newGradStr = colors?.map((cc: GradientProps, i: number) => ({
       ...cc,
       value: i === index ? high(cc) : low(cc),
-    }))
-    createGradientStr(newGradStr)
-  }
+    }));
+    createGradientStr(newGradStr);
+  };
 
   const handleDown = (e: any) => {
-    e.stopPropagation()
-    setSelectedColor(i)
-    setDragging(true)
-  }
+    e.stopPropagation();
+    setSelectedColor(i);
+    setDragging(true);
+  };
 
   // const handleFocus = () => {
   //   setInFocus('gpoint')
@@ -89,8 +83,8 @@ export const Handle = ({
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const GradientBar = () => {
   const {
@@ -102,26 +96,23 @@ const GradientBar = () => {
     handleGradient,
     pickerIdSuffix,
     createGradientStr,
-  } = usePicker()
-  const { barSize } = config
-  const [dragging, setDragging] = useState(false)
+  } = usePicker();
+  const { barSize } = config;
+  const [dragging, setDragging] = useState(false);
   // const [inFocus, setInFocus] = useState<string | null>(null)
 
   function force90degLinear(color: string) {
-    return color.replace(
-      /(radial|linear)-gradient\([^,]+,/,
-      'linear-gradient(90deg,'
-    )
+    return color.replace(/(radial|linear)-gradient\([^,]+,/, 'linear-gradient(90deg,');
   }
 
   const addPoint = (e: any) => {
-    const left = getHandleValue(e, barSize)
+    const left = getHandleValue(e, barSize);
     const newColors = [
       ...colors.map((c: any) => ({ ...c, value: low(c) })),
       { value: currentColor, left: left },
-    ]?.sort((a, b) => a.left - b.left)
-    createGradientStr(newColors)
-  }
+    ]?.sort((a, b) => a.left - b.left);
+    createGradientStr(newColors);
+  };
 
   // useEffect(() => {
   //   const selectedEl = window?.document?.getElementById(
@@ -131,18 +122,18 @@ const GradientBar = () => {
   // }, [selectedColor])
 
   const stopDragging = () => {
-    setDragging(false)
-  }
+    setDragging(false);
+  };
 
   const handleDown = (e: any) => {
     if (dragging) return;
-    addPoint(e)
-    setDragging(true)
-  }
+    addPoint(e);
+    setDragging(true);
+  };
 
   const handleMove = (e: any) => {
-    if (dragging) handleGradient(currentColor, getHandleValue(e, barSize))
-  }
+    if (dragging) handleGradient(currentColor, getHandleValue(e, barSize));
+  };
 
   // const handleKeyboard = (e: any) => {
   //   if (isGradient) {
@@ -155,18 +146,18 @@ const GradientBar = () => {
   // }
 
   const handleUp = () => {
-    stopDragging()
-  }
+    stopDragging();
+  };
 
   useEffect(() => {
-    window.addEventListener('mouseup', handleUp)
+    window.addEventListener('mouseup', handleUp);
     // window?.addEventListener('keydown', handleKeyboard)
 
     return () => {
-      window.removeEventListener('mouseup', handleUp)
+      window.removeEventListener('mouseup', handleUp);
       // window?.removeEventListener('keydown', handleKeyboard)
-    }
-  })
+    };
+  });
 
   return (
     <div
@@ -192,15 +183,10 @@ const GradientBar = () => {
         // className="rbgcp-gradient-bar-canvas"
       />
       {colors?.map((c: any, i) => (
-        <Handle
-          i={i}
-          left={c.left}
-          key={`${i}-${c}`}
-          setDragging={setDragging}
-        />
+        <Handle i={i} left={c.left} key={`${i}-${c}`} setDragging={setDragging} />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default GradientBar
+export default GradientBar;

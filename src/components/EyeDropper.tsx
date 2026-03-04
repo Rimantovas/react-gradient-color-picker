@@ -1,21 +1,18 @@
 /* eslint-disable react/jsx-no-leaked-render */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useState } from 'react'
-import Portal from './Portal.js'
-import html2canvas from 'html2canvas'
-import { controlBtnStyles } from '../styles/styles.js'
-import tc from 'tinycolor2'
-import { usePicker } from '../context.js'
+
+import html2canvas from 'html2canvas';
+import React, { useState } from 'react';
+import tc from 'tinycolor2';
+import { usePicker } from '../context.js';
+import { controlBtnStyles } from '../styles/styles.js';
+import Portal from './Portal.js';
 
 const DropperIcon = ({ color }: { color: string }) => {
-  const { defaultStyles } = usePicker()
-  const col = color ?? ''
+  const { defaultStyles } = usePicker();
+  const col = color ?? '';
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      style={{ width: 16 }}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style={{ width: 16 }}>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -48,72 +45,71 @@ const DropperIcon = ({ color }: { color: string }) => {
         d="M18.18,3.71,16.36,5.53a1.33,1.33,0,0,1-1.88,0h0a1.34,1.34,0,0,1,0-1.89l1.81-1.82a1.34,1.34,0,0,1,1.89,0h0A1.34,1.34,0,0,1,18.18,3.71Z"
       />
     </svg>
-  )
-}
+  );
+};
 
 const Dropper = ({ onSelect }: { onSelect: (arg0: string) => void }) => {
-  const { defaultStyles } = usePicker()
-  const [pickerCanvas, setPickerCanvas] =
-    useState<CanvasRenderingContext2D | null>(null)
-  const [coverUp, setCoverUp] = useState(false)
-  const [isPicking, setIsPicking] = useState(false)
+  const { defaultStyles } = usePicker();
+  const [pickerCanvas, setPickerCanvas] = useState<CanvasRenderingContext2D | null>(null);
+  const [coverUp, setCoverUp] = useState(false);
+  const [isPicking, setIsPicking] = useState(false);
 
   const takePick = () => {
-    const root = document.getElementById('root')
-    setCoverUp(true)
+    const root = document.getElementById('root');
+    setCoverUp(true);
 
     // @ts-expect-error some error with this imported packages types
     html2canvas(root).then((canvas: any) => {
-      const blankCanvas = document.createElement('canvas')
-      const ctx = blankCanvas.getContext('2d', { willReadFrequently: true })
+      const blankCanvas = document.createElement('canvas');
+      const ctx = blankCanvas.getContext('2d', { willReadFrequently: true });
 
       if (root && ctx) {
-        blankCanvas.width = root.offsetWidth * 2
-        blankCanvas.height = root.offsetHeight * 2
-        ctx.drawImage(canvas, 0, 0)
+        blankCanvas.width = root.offsetWidth * 2;
+        blankCanvas.height = root.offsetHeight * 2;
+        ctx.drawImage(canvas, 0, 0);
       }
 
-      setPickerCanvas(ctx)
-    })
-  }
+      setPickerCanvas(ctx);
+    });
+  };
 
   const getColorLegacy = (e: any) => {
-    e.stopPropagation()
+    e.stopPropagation();
     if (pickerCanvas) {
-      const { pageX, pageY } = e
-      const x1 = pageX * 2
-      const y1 = pageY * 2
-      const rgb = pickerCanvas.getImageData(x1, y1, 1, 1).data
-      onSelect(`rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`)
+      const { pageX, pageY } = e;
+      const x1 = pageX * 2;
+      const y1 = pageY * 2;
+      const rgb = pickerCanvas.getImageData(x1, y1, 1, 1).data;
+      onSelect(`rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`);
     }
-    setIsPicking(false)
-    setCoverUp(false)
-  }
+    setIsPicking(false);
+    setCoverUp(false);
+  };
 
   const getEyeDrop = () => {
-    setIsPicking(true)
+    setIsPicking(true);
     // @ts-expect-error - ts does not evaluate for window.EyeDropper
     if (!window.EyeDropper) {
-      takePick()
+      takePick();
     } else {
       // @ts-expect-error - ts does not evaluate for window.EyeDropper
-      const eyeDropper = new window.EyeDropper()
-      const abortController = new window.AbortController()
+      const eyeDropper = new window.EyeDropper();
+      const abortController = new window.AbortController();
 
       eyeDropper
         .open({ signal: abortController.signal })
         .then((result: any) => {
-          const tinyHex = tc(result.sRGBHex)
-          const { r, g, b } = tinyHex.toRgb()
-          onSelect(`rgba(${r}, ${g}, ${b}, 1)`)
-          setIsPicking(false)
+          const tinyHex = tc(result.sRGBHex);
+          const { r, g, b } = tinyHex.toRgb();
+          onSelect(`rgba(${r}, ${g}, ${b}, 1)`);
+          setIsPicking(false);
         })
         .catch((e: any) => {
-          console.log(e)
-          setIsPicking(false)
-        })
+          console.log(e);
+          setIsPicking(false);
+        });
     }
-  }
+  };
 
   return (
     <div>
@@ -130,14 +126,11 @@ const Dropper = ({ onSelect }: { onSelect: (arg0: string) => void }) => {
 
       {coverUp && (
         <Portal>
-          <div
-            onClick={(e) => getColorLegacy(e)}
-            style={defaultStyles.rbgcpEyedropperCover}
-          />
+          <div onClick={(e) => getColorLegacy(e)} style={defaultStyles.rbgcpEyedropperCover} />
         </Portal>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Dropper
+export default Dropper;
